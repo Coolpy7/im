@@ -13,13 +13,17 @@ final ThemeData kDefaultTheme = new ThemeData(
   accentColor: Colors.orangeAccent[400],
 );
 
-const String _name = "Your Name";
+String _chatName = "";
+String _name = "Your Name";
 
 class FriendlychatApp extends StatelessWidget {
+  final String title;
+  FriendlychatApp({this.title});
   @override
   Widget build(BuildContext context) {
+    _chatName = this.title;
     return new MaterialApp(
-      title: "Friendlychat",
+      title: this.title,
       theme: defaultTargetPlatform == TargetPlatform.iOS
           ? kIOSTheme
           : kDefaultTheme,
@@ -163,7 +167,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-          title: new Text("Friendlychat"),
+          title: new Text(_chatName),
           elevation:
           Theme.of(context).platform == TargetPlatform.iOS ? 0.0 : 4.0
       ),
