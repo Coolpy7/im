@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:im/home/chatscreen.dart';
 import '../constants.dart';
 import 'conversatin_page.dart';
 import 'contacts_page.dart';
@@ -147,10 +146,6 @@ class _HomeScreenState extends State<HomeScreen> {
             )),
             onPressed: () {
               print('点击了搜索按钮');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => FriendlychatApp()));
             },
           ),
           Container(width: 16.0),
