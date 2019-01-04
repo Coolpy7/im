@@ -88,10 +88,14 @@ class _ConversationItem extends StatelessWidget {
     return GestureDetector(
       // When the child is tapped, show a snackbar
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => FriendlychatApp(title:conversation.title)));
+        print(conversation.type);
+        if (conversation.type == 0) {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      FriendlychatApp(title:conversation.title)));
+        }
 //        final snackBar = SnackBar(content: Text("Tap"));
 //        Scaffold.of(context).showSnackBar(snackBar);
       },

@@ -1,20 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:im/home/chatmessage.dart';
 
 final ThemeData kIOSTheme = new ThemeData(
-  primarySwatch: Colors.orange,
+  primarySwatch: Colors.purple,
   primaryColor: Colors.grey[100],
   primaryColorBrightness: Brightness.light,
 );
 
-final ThemeData kDefaultTheme = new ThemeData(
-  primarySwatch: Colors.purple,
-  accentColor: Colors.orangeAccent[400],
-);
-
 String _chatName = "";
-String _name = "Your Name";
 
 class FriendlychatApp extends StatelessWidget {
   final String title;
@@ -24,50 +19,8 @@ class FriendlychatApp extends StatelessWidget {
     _chatName = this.title;
     return new MaterialApp(
       title: this.title,
-      theme: defaultTargetPlatform == TargetPlatform.iOS
-          ? kIOSTheme
-          : kDefaultTheme,
+      theme: kIOSTheme,
       home: new ChatScreen(),
-    );
-  }
-}
-
-class ChatMessage extends StatelessWidget {
-  ChatMessage({this.text, this.animationController});
-  final String text;
-  final AnimationController animationController;
-  @override
-  Widget build(BuildContext context) {
-    return new SizeTransition(
-        sizeFactor: new CurvedAnimation(
-            parent: animationController,
-            curve: Curves.easeOut
-        ),
-        axisAlignment: 0.0,
-        child: new Container(
-          margin: const EdgeInsets.symmetric(vertical: 10.0),
-          child: new Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              new Container(
-                margin: const EdgeInsets.only(right: 16.0),
-                child: new CircleAvatar(child: new Text(_name[0])),
-              ),
-              new Expanded(
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    new Text(_name, style: Theme.of(context).textTheme.subhead),
-                    new Container(
-                      margin: const EdgeInsets.only(top: 5.0),
-                      child: new Text(text),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        )
     );
   }
 }
@@ -88,9 +41,10 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
       _isComposing = false;
     });
     ChatMessage message = new ChatMessage(
-      text: text,
+      sentUserOid:"1", receivedUserOid:"2", name:"黎东海",
+      text:text, avatar:"https://avatars3.githubusercontent.com/u/11623139?s=460&v=4", imageUrl:null,
       animationController: new AnimationController(
-        duration: new Duration(milliseconds: 700),
+        duration: new Duration(milliseconds: 70),
         vsync: this,
       ),
     );
@@ -144,7 +98,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                 margin: new EdgeInsets.symmetric(horizontal: 4.0),
                 child: Theme.of(context).platform == TargetPlatform.iOS
                     ? new CupertinoButton(
-                  child: new Text("Send"),
+                  child: new Text("发送"),
                   onPressed: _isComposing
                       ? () => _handleSubmitted(_textController.text)
                       : null,
@@ -159,7 +113,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           decoration: Theme.of(context).platform == TargetPlatform.iOS
               ? new BoxDecoration(
               border:
-              new Border(top: new BorderSide(color: Colors.grey[200])))
+              new Border(top: new BorderSide(color: Colors.grey[350])))
               : null),
     );
   }
