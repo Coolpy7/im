@@ -94,7 +94,7 @@ class _ConversationItem extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      FriendlychatApp(title:conversation.title)));
+                      PreChat(title:conversation.title)));
         }
 //        final snackBar = SnackBar(content: Text("Tap"));
 //        Scaffold.of(context).showSnackBar(snackBar);

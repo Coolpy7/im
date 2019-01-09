@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:im/home/chatmessage.dart';
+import 'package:image_picker/image_picker.dart';
 
 final ThemeData kIOSTheme = new ThemeData(
   primarySwatch: Colors.purple,
@@ -11,9 +12,9 @@ final ThemeData kIOSTheme = new ThemeData(
 
 String _chatName = "";
 
-class FriendlychatApp extends StatelessWidget {
+class PreChat extends StatelessWidget {
   final String title;
-  FriendlychatApp({this.title});
+  PreChat({this.title});
   @override
   Widget build(BuildContext context) {
     _chatName = this.title;
@@ -35,14 +36,14 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
   bool _isComposing = false;
 
-  void _handleSubmitted(String text) {
+  void _handleSubmitted(String msg) {
     _textController.clear();
     setState(() {
       _isComposing = false;
     });
     ChatMessage message = new ChatMessage(
-      sentUserOid:"1", receivedUserOid:"2", name:"黎东海",
-      text:text, avatar:"https://avatars3.githubusercontent.com/u/11623139?s=460&v=4", imageUrl:null,
+      sentUserOid:"1", receivedUserOid:"1", name:"黎东海",
+      text:msg, avatar:"https://avatars3.githubusercontent.com/u/11623139?s=460&v=4", imageUrl:null,
       animationController: new AnimationController(
         duration: new Duration(milliseconds: 70),
         vsync: this,
@@ -70,15 +71,7 @@ class ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
               margin: new EdgeInsets.symmetric(horizontal: 4.0),
               child: new IconButton(
                   icon: new Icon(Icons.photo_camera),
-                  onPressed: () async {
-//                    File imageFile = await ImagePicker.pickImage();
-//                    int random = new Random().nextInt(100000);
-//                    StorageReference ref =
-//                    FirebaseStorage.instance.ref().child("image_$random.jpg");
-//                    StorageUploadTask uploadTask = ref.put(imageFile);
-//                    Uri downloadUrl = (await uploadTask.future).downloadUrl;
-//                    _sendMessage(imageUrl: downloadUrl.toString());
-                  }
+                  onPressed: (){},
               ),
             ),
             new Flexible(

@@ -28,6 +28,7 @@ class NavigationIconView {
 }
 
 class HomeScreen extends StatefulWidget {
+  static String tag = 'login-page';
   _HomeScreenState createState() => _HomeScreenState();
 }
 
