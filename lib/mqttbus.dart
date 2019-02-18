@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:im/msgbus.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
 final MqttClient client = new MqttClient('192.168.190.167', '');
@@ -24,11 +25,7 @@ class MqttLogin {
     try {
       await client.connect(user, pass);
       client.updates.listen((List<MqttReceivedMessage<MqttMessage>> c) {
-        final MqttPublishMessage recMess = c[0].payload;
-        //final String pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-        //var encoded = utf8.encode('中文');
-        var decoded = utf8.decode(recMess.payload.message);
-        print(decoded);
+        c.forEach(mqttOnMsg);
       });
       return true;
     } on Exception catch (e) {
@@ -36,6 +33,16 @@ class MqttLogin {
       client.disconnect();
       return false;
     }
+  }
+
+  void mqttOnMsg(MqttReceivedMessage<MqttMessage> element) {
+    final MqttPublishMessage recMess = element.payload;
+    //final String pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+    //var encoded = utf8.encode('中文');
+//    var decoded = utf8.decode(recMess.payload.message);
+    eventBus.fire(new MsgEvent(element));
+//    print(element.topic + ":");
+//    print(decoded);
   }
 
   Future<bool> state() async {
