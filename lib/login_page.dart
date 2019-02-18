@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:im/home/home_screen.dart';
+import 'mqttbus.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
+
   @override
   _LoginPageState createState() => new _LoginPageState();
 }
@@ -47,8 +49,13 @@ class _LoginPageState extends State<LoginPage> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(24),
         ),
-        onPressed: () {
-          Navigator.of(context).pushNamed(HomeScreen.tag);
+        onPressed: () async {
+          bool res = await chater.login("clientid1", "user1", "pass1");
+          if (res == true) {
+            Navigator.of(context).pushNamed(HomeScreen.tag);
+          } else {
+            showAlertDialog(context, "微信","连接服务器失败，请重试登录");
+          }
         },
         padding: EdgeInsets.all(12),
         color: Colors.lightBlueAccent,
@@ -84,4 +91,32 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+
+  void showAlertDialog(BuildContext context, title, message) {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('关闭'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
