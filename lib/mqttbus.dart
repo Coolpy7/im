@@ -75,10 +75,12 @@ class MqttLogin {
   /// The subscribed callback
   void onSubscribed(String topic) {
     print('EXAMPLE::Subscription confirmed for topic $topic');
+    pub("person/info", "ddd");
   }
 
   /// The unsolicited disconnect callback
   void onDisconnected() {
+
     print('EXAMPLE::OnDisconnected client callback - Client disconnection');
     if (client.connectionStatus.returnCode == MqttConnectReturnCode.solicited) {
       print('EXAMPLE::OnDisconnected callback is solicited, this is correct');
@@ -88,8 +90,8 @@ class MqttLogin {
   /// The successful connect callback
   void onConnected() {
     print('EXAMPLE::OnConnected client callback - Client connection was sucessful');
+    sub("person/info");
   }
 }
 
-//定义一个top-level变量，页面引入该文件后可以直接使用bus
 var chater = new MqttLogin();

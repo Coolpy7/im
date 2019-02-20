@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:im/home/home_screen.dart';
+import 'package:im/msgbus.dart';
 import 'mqttbus.dart';
 
 class LoginPage extends StatefulWidget {
@@ -12,6 +13,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController(text: "alucard@gmail.com");
   final passController  = TextEditingController(text: "some password");
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    eventBus.on<MsgEvent>().listen((MsgEvent data) =>
+        Navigator.pushReplacementNamed(context, HomeScreen.tag)
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,10 +64,8 @@ class _LoginPageState extends State<LoginPage> {
         ),
         onPressed: () async {
           bool res = await chater.login(emailController.text, emailController.text, passController.text);
-          if (res == true) {
-            Navigator.of(context).pushNamed(HomeScreen.tag);
-          } else {
-            showAlertDialog(context, "微信","连接服务器失败，请重试登录");
+          if (res == false) {
+            showAlertDialog(context, "Coolpy7IM","连接服务器失败，请重试登录");
           }
         },
         padding: EdgeInsets.all(12),

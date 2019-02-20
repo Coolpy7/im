@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import '../constants.dart';
 
@@ -38,6 +40,40 @@ class Conversation {
     }
     return false;
   }
+
+  Conversation clientFromJson(String str) {
+    final jsonData = json.decode(str);
+    return Conversation.fromJson(jsonData);
+  }
+
+  String clientToJson(Conversation data) {
+    final dyn = data.toJson();
+    return json.encode(dyn);
+  }
+
+  factory Conversation.fromJson(Map<String, dynamic> json) => new Conversation(
+    avatar: json["avatar"],
+    title: json["title"],
+    titleColor: json["titleColor"],
+    desc: json["desc"],
+    updateAt: json["updateAt"],
+    isMute: json["isMute"],
+    unreadMsgCount: json["unreadMsgCount"],
+    dispalyDot: json["dispalyDot"],
+    type: json["type"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "avatar": avatar,
+    "title": title,
+    "titleColor": titleColor,
+    "desc": desc,
+    "updateAt": updateAt,
+    "isMute": isMute,
+    "unreadMsgCount": unreadMsgCount,
+    "dispalyDot": dispalyDot,
+    "type": type,
+  };
 }
 
 class ConversationPageData {
